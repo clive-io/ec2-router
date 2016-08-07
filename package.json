@@ -5,13 +5,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Clive Chan (cc@clive.io)",
   "license": "MIT",
-  "description": "",
+  "description": "Reverse proxy router with http api, used to manage my ec2 server.",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.13.4",
     "mkdirp": "^0.5.1",
     "redbird": "^0.4.14"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cchan/ec2-router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cchan/ec2-router/issues"
+  },
+  "homepage": "https://github.com/cchan/ec2-router#readme"
 }
