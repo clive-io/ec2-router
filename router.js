@@ -92,11 +92,12 @@ function load(cb){
   if(typeof cb !== "function") cb = console.error;
   
   fs.readFile(SAVEFILE, function(err, data){
+    var obj;
     if(err){
       cb('load: readfile error: ' + err);
       return;
     }else try{
-      var obj = JSON.parse(data);
+      obj = JSON.parse(data);
       importJSON(obj);
     }catch(e){
       cb('load: JSON parse error');
@@ -132,7 +133,7 @@ app.get(/^\/register\/([a-zA-Z0-9\.]+)\/([0-9]+)/, function(req, res){
   });
 });
 app.post(/^\/register\/([a-zA-Z0-9\.]+)\/([0-9]+)/, function(req, res){
-  if(typeof req.body !== "object" || Object.keys(req.body).length == 0){
+  if(typeof req.body !== "object" || Object.keys(req.body).length === 0){
     proxy.unregister(req.params[0]);
     proxy.register(req.params[0], 'http://localhost:' + req.params[1], { ssl: true });
   }else if(!checkSSL(req.body)){
