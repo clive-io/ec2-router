@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "router.js",
   "scripts": {
-    "test": "snyk test"
+    "test": "snyk test",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "Clive Chan (cc@clive.io)",
   "license": "MIT",
@@ -12,11 +14,10 @@
     "body-parser": "^1.15.2",
     "express": "^4.13.4",
     "mkdirp": "^0.5.1",
-    "redbird": "^0.5.4"
-  },
-  "devDependencies": {
+    "redbird": "^0.5.4",
     "snyk": "^1.18.0"
   },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cchan/ec2-router.git"
@@ -24,5 +25,6 @@
   "bugs": {
     "url": "https://github.com/cchan/ec2-router/issues"
   },
-  "homepage": "https://github.com/cchan/ec2-router#readme"
+  "homepage": "https://github.com/cchan/ec2-router#readme",
+  "snyk": true
 }
