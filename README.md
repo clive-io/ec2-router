@@ -1,7 +1,10 @@
-router
-======
+ec2-router
+==========
 Copyright (c) 2016 Clive Chan.
 MIT license.
+
+[![bitHound Overall Score](https://www.bithound.io/github/cchan/ec2-router/badges/score.svg)](https://www.bithound.io/github/cchan/ec2-router)
+[![Known Vulnerabilities](https://snyk.io/test/github/cchan/ec2-router/badge.svg)](https://snyk.io/test/github/cchan/ec2-router)
 
 The node server on which all the other web-based stuff on my ec2 machine depends.
 Opens up local port 10000 which can be used to register domains in a reverse proxy server. For example:
@@ -11,10 +14,3 @@ Opens up local port 10000 which can be used to register domains in a reverse pro
     curl -sS localhost:10000/unregister/apcs.clive.io            # Unregisters apcs.clive.io, so that visitors will see simply "Not Found"
 
 Automatically saves to and loads from `~/.router/save.json`.
-
-### Useful for security
-  - [Qualys SSL Server Test](https://www.ssllabs.com/ssltest/)
-  - [StartSSL](https://startssl.com/) (gotta renew once a year)
-  - [CloudFlare](https://www.cloudflare.com) (also, can use Origin CA here instead of StartSSL)
-  - [Domain Security Check](https://www.cloudflare.com/domain-security-check/) (not that there's much I can do about it)
-  - At some point I need to add `helmet` from NPM but not sure how to delve into the RedBird code. Maybe it's just using plain old `http` not Express.
