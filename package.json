@@ -14,6 +14,7 @@
   "description": "Reverse proxy router with http api, used to manage my ec2 server.",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "expand-home-dir": "0.0.3",
     "express": "^4.13.4",
     "mkdirp": "^0.5.1",
     "redbird": "^0.5.4",

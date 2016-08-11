@@ -1,17 +1,30 @@
+"use strict";
+
 var PORT = 10000;
-var SAVEFILE = "~/.router/save.json";
 
 var fs = require('fs');
+const ROUTERDIR = require('expand-home-dir')('~/.router');
+const SAVEFILE = ROUTERDIR + "/save.json";
 
-function expandTilde(str){
-  return str.replace('~', '/home/ec2-user');
-}
+//Check that ~/.router and savefile exist
+require('mkdirp')(require('path').dirname(SAVEFILE), function(err){
+  if(err){
+    console.error('Unable to access savefile: mkdirp error');
+    process.exit(1);
+  }else try{
+    fs.closeSync(fs.openSync(SAVEFILE, 'a'));
+    fs.accessSync(SAVEFILE, fs.R_OK | fs.W_OK);
+  }catch(e){
+    console.error('Unable to access savefile: ' + e);
+    process.exit(1);
+  }
+});
 
 var sslDefault = {
   port: 443,
-  key: expandTilde("~/.router/certs/default.key"),
-  cert: expandTilde("~/.router/certs/default.crt"),
-  ca: [expandTilde("~/.router/certs/default.ca")]
+  key: ROUTERDIR + "/certs/default.key",
+  cert: ROUTERDIR + "/certs/default.crt",
+  ca: [ROUTERDIR + "/certs/default.ca"]
 };
 if(!checkSSL(sslDefault)){
   console.error("inaccessible default SSL config");
@@ -165,19 +178,6 @@ http.on('listening', function(){
   console.log('listening on %s:%s', http.address().address, http.address().port);
 });
 
-//Check that ~/.router and savefile exist
-SAVEFILE = expandTilde(SAVEFILE);
-require('mkdirp')(require('path').dirname(SAVEFILE), function(err){
-  if(err){
-    console.error('Unable to access savefile: mkdirp error');
-    process.exit(1);
-  }else try{
-    fs.closeSync(fs.openSync(SAVEFILE, 'a'));
-    fs.accessSync(SAVEFILE, fs.R_OK | fs.W_OK);
-  }catch(e){
-    console.error('Unable to access savefile: ' + e);
-    process.exit(1);
-  }
-});
+
 load(); //Initial load
 http.listen(PORT, '127.0.0.1'); //and start the server
