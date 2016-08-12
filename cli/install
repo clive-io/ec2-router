@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ "$1" = "-f" ] || [ "$1" = "--force" ] || [ ! -e /usr/local/bin/router ]; then
+  cp cli/router /usr/local/bin
+else
+  echo 'File /usr/local/bin/router already exists.'
+  echo 'Use -f/--force to ignore this warning.'
+fi

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -f /usr/local/bin/router ]; then
+  if cmp -s /usr/local/bin/router cli/router || [ "$1" = "-f" ] || [ "$1" = "--force" ]; then
+    rm /usr/local/bin/router
+  else
+    echo '/usr/local/bin/router is not the same as cli/router; you may have something else installed with the same name'
+    echo 'Use -f/--force to uninstall anyway.'
+  fi
+else
+  echo 'Router is not currently installed'
+fi

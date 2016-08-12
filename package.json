@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "router.js",
   "scripts": {
+    "install-cli": "cli/install",
+    "uninstall-cli": "cli/uninstall"
     "prestart": "npm run snyk-protect",
     "start": "node router.js",
     "test": "snyk test",

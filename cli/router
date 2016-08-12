@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if [ "$1" = "reg" ] || [ "$1" = "register" ]; then
+  if [ ! -z "$2" ] && [ ! -z "$3" ]; then
+    curl localhost:10000/register/$2/$3
+  else
+    echo "Missing parameters"
+  fi
+elif [ "$1" = "unreg" ] || [ "$1" = "unregister" ]; then
+  if [ ! -z "$2" ]; then
+    curl localhost:10000/unregister/$2
+  else
+    echo "Missing parameters"
+  fi
+elif [ -z "$1" ] || [ "$1" = "show" ]; then
+  curl localhost:10000
+else
+  echo "Unknown router command"
+fi
