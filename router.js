@@ -3,7 +3,7 @@
 var PORT = 10000;
 
 var fs = require('fs');
-const ROUTERDIR = require('expand-home-dir')('~/.router');
+const ROUTERDIR = '/home/ec2-user/.router'; //hardcoded because this is being run as root
 const SAVEFILE = ROUTERDIR + "/save.json";
 
 //Check that ~/.router and savefile exist
