@@ -1,7 +1,8 @@
 #!/bin/sh
 
 if [ "$1" = "-f" ] || [ "$1" = "--force" ] || [ ! -e /usr/local/bin/router ]; then
-  cp cli/router /usr/local/bin
+  sudo cp cli/router /usr/local/bin
+  echo 'Successfully installed.'
 else
   echo 'File /usr/local/bin/router already exists.'
   echo 'Use -f/--force to ignore this warning.'
