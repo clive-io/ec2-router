@@ -6,6 +6,8 @@ MIT license.
 [![bitHound Overall Score](https://www.bithound.io/github/cchan/ec2-router/badges/score.svg)](https://www.bithound.io/github/cchan/ec2-router)
 [![Known Vulnerabilities](https://snyk.io/test/github/cchan/ec2-router/badge.svg)](https://snyk.io/test/github/cchan/ec2-router)
 
+(A part of my [ec2 server suite](https://github.com/cchan/ec2))
+
 The node server on which all the other web-based stuff on my ec2 machine depends.
 Opens up local port 10000 which can be used to register domains in a reverse proxy server. For example:
 
