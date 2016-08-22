@@ -2,16 +2,19 @@
 
 if [ "$1" = "reg" ] || [ "$1" = "register" ]; then
   if [ ! -z "$2" ] && [ ! -z "$3" ]; then
-    curl localhost:10000/register/$2/$3
+    curl "localhost:10000/register/$2/$3"
   else
     echo "Missing parameters"
   fi
 elif [ "$1" = "unreg" ] || [ "$1" = "unregister" ]; then
   if [ ! -z "$2" ]; then
-    curl localhost:10000/unregister/$2
+    curl "localhost:10000/unregister/$2"
   else
     echo "Missing parameters"
   fi
+elif [ "$1" = "create" ]; then
+  export PORT=$(curl "localhost:10000/register/$2")
+  pm2 start npm --name="$2" -- start
 elif [ -z "$1" ] || [ "$1" = "show" ]; then
   curl localhost:10000
 else

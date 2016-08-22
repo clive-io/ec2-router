@@ -83,7 +83,7 @@ function exportJSON(){
 function importJSON(routes){
   for(var route in routes)
     if(routes.hasOwnProperty(route) 
-      && /^[a-zA-Z0-9\.]+$/.test(route) //Test it against the same regexes as /register
+      && /^[a-zA-Z0-9\.\-]+$/.test(route) //Test it against the same regexes as /register
       && /^[0-9]+$/.test(routes[route]))
       proxy.register(route, 'http://localhost:' + routes[route]);
 }
@@ -138,14 +138,14 @@ app.get('/load', function(req, res){
   save(res.send);
 });
 
-app.get(/^\/register\/([a-zA-Z0-9\.]+)\/([0-9]+)/, function(req, res){
+app.get(/^\/register\/([a-zA-Z0-9\.\-]+)\/([0-9]+)/, function(req, res){
   proxy.unregister(req.params[0]);
   proxy.register(req.params[0], 'http://localhost:' + req.params[1]);
   save(function(r){res.write(r);}, function(){
     res.send('Registered: http://' + req.params[0] + ' => ' + 'http://localhost:' + req.params[1] + '\r\n');
   });
 });
-app.post(/^\/register\/([a-zA-Z0-9\.]+)\/([0-9]+)/, function(req, res){
+app.post(/^\/register\/([a-zA-Z0-9\.\-]+)\/([0-9]+)/, function(req, res){
   if(typeof req.body !== "object" || Object.keys(req.body).length === 0){
     proxy.unregister(req.params[0]);
     proxy.register(req.params[0], 'http://localhost:' + req.params[1], { ssl: true });
@@ -167,10 +167,25 @@ app.post(/^\/register\/([a-zA-Z0-9\.]+)\/([0-9]+)/, function(req, res){
   });
 });
 
-app.get(/^\/unregister\/([a-zA-Z0-9\.]+)/, function(req, res){
+app.get(/^\/unregister\/([a-zA-Z0-9\.\-]+)/, function(req, res){
   proxy.unregister(req.params[0]);
   save(function(r){res.write(r);}, function(){
     res.send('Unregistered: ' + req.params[0] + '\r\n');
+  });
+});
+
+app.get(/^\/register\/([a-zA-Z0-9\.\-]+)/, function(req, res){
+  var portfinder = require('portfinder');
+  portfinder.getPort(function(err, port){
+    if(err)
+      res.send(500, 'Failed to find an open port for ' + req.params[0]);
+    else{
+      proxy.unregister(req.params[0]);
+      proxy.register(req.params[0], 'http://localhost:' + port);
+      save(function(r){res.write(r);}, function(){
+        res.send(port);
+      });
+    }
   });
 });
 
