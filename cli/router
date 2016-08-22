@@ -13,12 +13,29 @@ elif [ "$1" = "unreg" ] || [ "$1" = "unregister" ]; then
     echo "Missing parameters"
   fi
 elif [ "$1" = "create" ]; then
-  export PORT=$(curl "localhost:10000/register/$2")
-  echo "Port $PORT allocated and registered."
-  pm2 start npm --name="$2" -- start
+  if [ -z "$2" ]; then
+    echo "Missing parameters"
+  else
+    export PORT=$(curl -sS "localhost:10000/register/$2")
+    echo "Port $PORT allocated and registered to $2."
+    pm2 start npm --name="$2" -- start
+    shift 2 # discard "create" and the already-registered route
+    for route in "$@"
+    do
+      curl -sS "localhost:10000/register/$route/$PORT"
+    done
+  fi
 elif [ "$1" = "delete" ]; then
-  curl -sS "localhost:10000/unregister/$2"
-  pm2 delete "$2"
+  if [ -z "$2" ]; then
+    echo "Missing parameters"
+  else
+    pm2 delete "$2"
+    shift # discard "delete"
+    for route in "$@"
+    do
+      curl -sS "localhost:10000/unregister/$route"
+    done
+  fi
 elif [ -z "$1" ] || [ "$1" = "show" ]; then
   curl -sS localhost:10000
 else
