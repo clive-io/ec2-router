@@ -183,7 +183,7 @@ app.get(/^\/register\/([a-zA-Z0-9\.\-]+)/, function(req, res){
       proxy.unregister(req.params[0]);
       proxy.register(req.params[0], 'http://localhost:' + port);
       save(function(r){res.write(r);}, function(){
-        res.send(port);
+        res.send("" + port);
       });
     }
   });
