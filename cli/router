@@ -14,7 +14,11 @@ elif [ "$1" = "unreg" ] || [ "$1" = "unregister" ]; then
   fi
 elif [ "$1" = "create" ]; then
   export PORT=$(curl "localhost:10000/register/$2")
+  echo "Port $PORT allocated and registered."
   pm2 start npm --name="$2" -- start
+elif [ "$1" = "delete" ]; then
+  curl "localhost:10000/unregister/$2"
+  pm2 delete "$2"
 elif [ -z "$1" ] || [ "$1" = "show" ]; then
   curl localhost:10000
 else
