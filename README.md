@@ -40,7 +40,7 @@ For the most common usecase - running a nodejs server - there's a shortform. Run
 
     router create clive.io cliveio.clive.io
 
-This will register the reverse proxy route for `clive.io`, alias the route `cliveio.clive.io` to the same place, and run `npm start`. To undo this:
+This will register the reverse proxy route for `clive.io`, alias the route `cliveio.clive.io` to the same place, and run `npm start` using the `pm2` process manager. To undo this:
 
     router delete clive.io cliveio.clive.io
 
