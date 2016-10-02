@@ -21,7 +21,7 @@
     "mkdirp": "^0.5.1",
     "portfinder": "^1.0.7",
     "redbird": "^0.6.5",
-    "snyk": "^1.18.1"
+    "snyk": "^1.19.1"
   },
   "devDependencies": {
     "eslint": "^3.6.1",
