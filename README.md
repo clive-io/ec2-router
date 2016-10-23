@@ -13,6 +13,14 @@ The node server on which all the other web-based stuff on my ec2 machine depends
 ## Install
 To install the CLI, run `cli/install`, and to uninstall the CLI, run `cli/uninstall`.
 
+## Run
+I suggest using `pm2`, as in the `start` script:
+
+    sudo pm2 start npm --name="revprox" -- start
+
+This will run it under the pm2 master process for the root user. Any other ones you start with the below shortform or just by running your own scripts directly
+should be on the pm2 master process on an unprivileged user.
+
 ## API
 Opens up local port 10000 which can be used as an HTTP API to register routes in a reverse proxy server. For example:
 
@@ -32,7 +40,7 @@ For the most common usecase - running a nodejs server - there's a shortform. Run
 
     router create clive.io cliveio.clive.io
 
-This will register the reverse proxy route for `clive.io`, alias the route `cliveio.clive.io` to the same place, and run `npm start`. To undo this:
+This will register the reverse proxy route for `clive.io`, alias the route `cliveio.clive.io` to the same place, and run `npm start` using the `pm2` process manager. To undo this:
 
     router delete clive.io cliveio.clive.io
 
