@@ -19,7 +19,7 @@
     "expand-home-dir": "0.0.3",
     "express": "^4.13.4",
     "mkdirp": "^0.5.1",
-    "portfinder": "^1.0.7",
+    "portfinder": "^1.0.8",
     "redbird": "^0.6.6",
     "snyk": "^1.19.1"
   },
