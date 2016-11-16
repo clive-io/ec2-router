@@ -32,7 +32,6 @@ if(!checkSSL(sslDefault)){
 }
 var proxy = require('redbird')({
   port: 80,
-  xfwd: false,
   ssl: sslDefault,
   bunyan: false
 });
