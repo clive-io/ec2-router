@@ -1,9 +1,10 @@
 #!/bin/sh
 
-if [ "$1" = "-f" ] || [ "$1" = "--force" ] || [ ! -e /usr/local/bin/router ]; then
+if [ "$1" = "-f" ] || [ "$1" = "--force" ] || [ ! -e /usr/local/bin/router ] && [ ! -e /usr/local/bin/https ]; then
   sudo cp cli/router /usr/local/bin
+  sudo cp cli/https /usr/local/bin
   echo 'Successfully installed.'
 else
-  echo 'File /usr/local/bin/router already exists.'
+  echo 'File /usr/local/bin/router or /usr/local/bin/https already exists.'
   echo 'Use -f/--force to ignore this warning.'
 fi
