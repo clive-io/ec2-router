@@ -1,45 +1,49 @@
-#!/bin/sh
+#! /usr/bin/env node
 
-if [ "$1" = "reg" ] || [ "$1" = "register" ]; then
-  if [ -z "$2" ]; then
-    echo "Missing parameters"
-  elif [ -z "$3" ]; then
-    curl -sS "localhost:10000/register/$2"
-  else
-    curl -sS "localhost:10000/register/$2/$3"
-  fi
-elif [ "$1" = "unreg" ] || [ "$1" = "unregister" ]; then
-  if [ ! -z "$2" ]; then
-    curl -sS "localhost:10000/unregister/$2"
-  else
-    echo "Missing parameters"
-  fi
-elif [ "$1" = "create" ]; then
-  if [ -z "$2" ]; then
-    echo "Missing parameters"
-  else
-    export PORT=$(curl -sS "localhost:10000/register/$2")
-    echo "Port $PORT allocated and registered to $2."
-    pm2 start npm --name="router:$2" --log-date-format="YYYY-MM-DD HH:mm Z" -- start
-    shift 2 # discard "create" and the already-registered route
-    for route in "$@"
-    do
-      curl -sS "localhost:10000/register/$route/$PORT"
-    done
-  fi
-elif [ "$1" = "delete" ]; then
-  if [ -z "$2" ]; then
-    echo "Missing parameters"
-  else
-    pm2 delete "router:$2"
-    shift # discard "delete"
-    for route in "$@"
-    do
-      curl -sS "localhost:10000/unregister/$route"
-    done
-  fi
-elif [ -z "$1" ] || [ "$1" = "show" ]; then
-  curl -sS localhost:10000
-else
-  echo "Unknown router command"
-fi
+let argv = require('yargs').argv, cmd = argv._[0];
+let request = require('request-promise');
+let pm2 = require('pm2');
+
+switch(cmd){
+  case "create":
+  case "register": case "reg":
+    let route;
+    if(argv.domain){
+      route = '/register/' + argv.domain;
+      if(argv.port) route += '/' + argv.port
+    }else
+      console.error("No domain specified for registration");
+    
+    request("http://localhost:10000" + route).then((port) => {
+      if(isNaN(port)) //if the router-server returns no port, that means we specified one ourselves.
+        port = argv.port;
+      
+      console.log("Using port " + port);
+      
+      if(cmd == "create")
+        return new Promise((res, rej)=>{
+          pm2.start({
+            script: "npm",
+            args: "start",
+            name: argv.domain,
+            env: {PORT: port}
+          }, (err) => { if(err) rej(err); else res(); });
+        }).then(console.log);
+    }).catch(console.error);
+    
+    break;
+  
+  case "delete":
+    if(argv.domain) pm2.delete(argv.domain, console.error);
+  case "unregister": case "unreg":
+    if(argv.domain) request('/unregister/' + argv.domain).then(console.log).catch(console.error);
+    else console.error("No domain specified for unregistration");
+    break;
+  
+  case "show": case undefined:
+    request('http://localhost:10000').then(console.log).catch(console.error);
+    break;
+  
+  default:
+    console.error("unrecognized command");
+}
