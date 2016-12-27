@@ -21,15 +21,15 @@
     "express": "^4.13.4",
     "mkdirp": "^0.5.1",
     "pm2": "^2.2.2",
-    "portfinder": "^1.0.7",
-    "redbird": "^0.6.5",
+    "portfinder": "^1.0.10",
+    "redbird": "^0.6.8",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
     "snyk": "^1.19.1"
   },
   "devDependencies": {
-    "eslint": "^3.6.1",
-    "eslint-config-google": "^0.6.0"
+    "eslint": "^3.12.1",
+    "eslint-config-google": "^0.7.0"
   },
   "repository": {
     "type": "git",
