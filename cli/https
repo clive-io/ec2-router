@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 require('dotenv-safe').load();
-let CF = {Zone, DNSRecord} = require('cloudflare');
+let CF = require('cloudflare');
 let SUBDOMAIN = require('yargs').argv._[0];
 
 let client = new CF({
@@ -9,8 +9,8 @@ let client = new CF({
   key: CF_KEY
 });
 
-let rr = DNSRecord.create({
-  zone_id: ???,
+let rr = CF.DNSRecord.create({
+  zone_id: process.env.CF_ZONE_ID,
   type: 'CNAME',
   name: SUBDOMAIN,
   content: 'clive.io',
