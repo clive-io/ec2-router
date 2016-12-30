@@ -101,7 +101,10 @@ function save(error, success){
   });
 }
 function load(cb){
-  if(typeof cb !== "function") cb = console.error;
+  if(typeof cb !== "function") cb = function(err, loaded){
+    if(err) console.error(err);
+    else console.log(loaded);
+  };
   
   fs.readFile(SAVEFILE, function(err, data){
     var obj;
@@ -115,7 +118,7 @@ function load(cb){
       cb('load: JSON parse error');
       return;
     }
-    cb('Loaded: ' + JSON.stringify(obj));
+    cb(null, JSON.stringify(obj));
   });
 }
 
