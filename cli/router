@@ -16,7 +16,7 @@ switch(cmd){
       .catch((err)=>{console.log("HTTPS addition failed, perhaps it's already registered?", err);});
     }else{
       console.error("No domain specified for registration");
-      exit(1);
+      process.exit(1);
     }
     
     request("http://localhost:10000" + route).then((port) => {

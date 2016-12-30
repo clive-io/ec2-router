@@ -3,6 +3,7 @@
 var PORT = 10000;
 
 var fs = require('fs');
+var Promise = require('bluebird');
 const ROUTERDIR = '/home/ec2-user/.router'; //hardcoded because this is being run as root
 const SAVEFILE = ROUTERDIR + "/save.json";
 
@@ -100,25 +101,22 @@ function save(error, success){
     else success('Saved: ' + str);
   });
 }
-function load(cb){
-  if(typeof cb !== "function") cb = function(err, loaded){
-    if(err) console.error(err);
-    else console.log(loaded);
-  };
-  
-  fs.readFile(SAVEFILE, function(err, data){
-    var obj;
-    if(err){
-      cb('load: readfile error: ' + err);
-      return;
-    }else try{
-      obj = JSON.parse(data);
-      importJSON(obj);
-    }catch(e){
-      cb('load: JSON parse error');
-      return;
-    }
-    cb(null, JSON.stringify(obj));
+function load(){
+  return new Promise((res,rej) => {
+    fs.readFile(SAVEFILE, function(err, data){
+      var obj;
+      if(err){
+        rej('load: readfile error: ' + err);
+        return;
+      }else try{
+        obj = JSON.parse(data);
+        importJSON(obj);
+      }catch(e){
+        rej('load: JSON parse error');
+        return;
+      }
+      res(obj);
+    });
   });
 }
 
@@ -196,5 +194,5 @@ http.on('listening', function(){
 });
 
 
-load(); //Initial load
+load().then(console.log).catch(console.error); //Initial load
 http.listen(PORT, '127.0.0.1'); //and start the server

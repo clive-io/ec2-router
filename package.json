@@ -11,6 +11,7 @@
   "license": "MIT",
   "description": "Reverse proxy router with http api, used to manage my ec2 server.",
   "dependencies": {
+    "bluebird": "^3.4.7",
     "body-parser": "^1.15.2",
     "cloudflare": "^1.1.0",
     "dotenv-safe": "^3.0.0",
