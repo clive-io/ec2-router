@@ -11,8 +11,13 @@ switch(cmd){
     if(argv.domain){
       route = '/register/' + argv.domain;
       if(argv.port) route += '/' + argv.port
-    }else
+      require('https').add(argv.domain)
+      .then(()=>{console.log("Successfully added HTTPS.");})
+      .catch((err)=>{console.log("HTTPS addition failed, perhaps it's already registered?", err);});
+    }else{
       console.error("No domain specified for registration");
+      exit(1);
+    }
     
     request("http://localhost:10000" + route).then((port) => {
       if(isNaN(port)) //if the router-server returns no port, that means we specified one ourselves.
