@@ -1,11 +1,15 @@
 {
   "name": "router",
   "version": "1.0.0",
-  "main": "router.js",
+  "main": "server.js",
+  "bin": {
+    "router": "./bin/router.js",
+    "https": "./bin/https.js"
+  },
   "scripts": {
-    "install-cli": "cli/install",
-    "uninstall-cli": "cli/uninstall",
-    "start": "node router.js"
+    "start": "node router.js",
+    "install-cli": "npm install -g",
+    "uninstall-cli": "npm uninstall -g"
   },
   "author": "Clive Chan (cc@clive.io)",
   "license": "MIT",
