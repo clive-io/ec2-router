@@ -12,10 +12,10 @@ switch(cmd){
       route = '/register/' + argv.domain;
       if(argv.port) route += '/' + argv.port;
       
-      if(argv.domain.endsWith('.clive.io'))
-        require('./https').add(argv.domain.substr(0,-9))
-        .then(()=>{console.log("Successfully added HTTPS to " + argv.domain.substr(0,-9) + ".clive.io");})
-        .catch(err=>{console.log("HTTPS addition failed, perhaps it's already registered?\n\n" + err);});
+      //if(argv.domain.endsWith('.clive.io'))
+      //  require('./https').add(argv.domain.substr(0,-9))
+      //  .then(()=>{console.log("Successfully added HTTPS to " + argv.domain.substr(0,-9) + ".clive.io");})
+      //  .catch(err=>{console.log("HTTPS addition failed, perhaps it's already registered?\n\n" + err);});
     }else{
       console.error("No --domain specified for registration");
       process.exit(1);
