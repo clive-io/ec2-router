@@ -15,7 +15,7 @@ switch(cmd){
       if(argv.domain.endsWith('.clive.io'))
         require('./https').add(argv.domain.substr(0,-9))
         .then(()=>{console.log("Successfully added HTTPS to " + argv.domain.substr(0,-9) + ".clive.io");})
-        .catch((err)=>{console.log("HTTPS addition failed, perhaps it's already registered?", err);});
+        .catch(err=>{console.log("HTTPS addition failed, perhaps it's already registered?\n\n" + err);});
     }else{
       console.error("No --domain specified for registration");
       process.exit(1);
@@ -34,7 +34,7 @@ switch(cmd){
             args: "start",
             name: argv.domain,
             env: {PORT: port}
-          }, (err) => { if(err) rej(err); else res(); });
+          }, (err, result) => { if(err) rej(err); else res(result); });
       }).then(()=>{
         console.log("Started PM2 process");
         pm2.disconnect();
