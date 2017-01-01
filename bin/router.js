@@ -35,7 +35,7 @@ switch(cmd){
             name: argv.domain,
             env: {PORT: port}
           }, (err) => { if(err) rej(err); else res(); });
-        }).then(console.log);
+      }).then(()=>{console.log("Started PM2 process");});
     }).catch(console.error);
     
     break;
@@ -43,7 +43,7 @@ switch(cmd){
   case "delete":
     if(argv.domain) pm2.delete(argv.domain, console.error);
   case "unregister": case "unreg":
-    if(argv.domain) request('/unregister/' + argv.domain).then(console.log).catch(console.error);
+    if(argv.domain) request('http://localhost:10000/unregister/' + argv.domain).then(console.log).catch(console.error);
     else console.error("No domain specified for unregistration");
     break;
   
