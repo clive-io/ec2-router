@@ -7,7 +7,7 @@
     "https": "./bin/https.js"
   },
   "scripts": {
-    "start": "node router.js",
+    "start": "node server.js",
     "install-cli": "npm install -g",
     "uninstall-cli": "npm uninstall -g"
   },
