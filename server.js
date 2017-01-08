@@ -2,6 +2,13 @@
 
 var PORT = 10000;
 
+require('dotenv-safe').load();
+let CF = require('cloudflare');
+let client = new CF({
+  email: process.env.CF_EMAIL,
+  key: process.env.CF_KEY
+});
+
 var fs = require('fs');
 var Promise = require('bluebird');
 const ROUTERDIR = '/home/ec2-user/.router'; //hardcoded because this is being run as root
@@ -187,6 +194,20 @@ app.get(/^\/register\/([a-zA-Z0-9\.\-]+)/, function(req, res){
       });
     }
   });
+});
+
+app.get(/^\/https\/([a-zA-Z0-9\-]+)/, function(req, res){
+  let rr = CF.DNSRecord.create({
+    zone_id: process.env.CF_ZONE,
+    type: 'CNAME',
+    name: req.params[0],
+    content: 'clive.io',
+    proxied: true
+  });
+  
+  client.addDNS(rr).then(function(){
+    res.send(200, 'Successfully registered ');
+  });;
 });
 
 http.on('listening', function(){
