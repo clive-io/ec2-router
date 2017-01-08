@@ -3,7 +3,7 @@
 let request = require('request-promise');
 
 function addSubdomain(subdomain){
-  if(/[^a-zA-Z0-9]/.test(subdomain))
+  if(/[^a-zA-Z0-9\-]/.test(subdomain))
     return Promise.reject("Non-alpha-numeric-dash subdomain name.");
   else
     return request('http://localhost:10000/https/' + subdomain);
