@@ -15,4 +15,4 @@
 # whenever I restart this server. Easy enough.
 
 
-sudo pm2 start npm --name="revprox" -- start
+sudo PM2_HOME='/home/www/.pm2' pm2 start npm --name="revprox" -- start

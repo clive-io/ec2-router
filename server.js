@@ -11,7 +11,7 @@ let client = new CF({
 
 var fs = require('fs');
 var Promise = require('bluebird');
-const ROUTERDIR = '/home/ec2-user/.router'; //hardcoded because this is being run as root
+const ROUTERDIR = '/home/www/.router'; //hardcoded because this is being run as root
 const SAVEFILE = ROUTERDIR + "/save.json";
 
 //Check that ~/.router and savefile exist
@@ -39,7 +39,7 @@ if(!checkSSL(sslDefault)){
   process.exit(1);
 }
 var proxy = require('redbird')({
-  port: 80,
+  port: 9999,
   ssl: sslDefault,
   bunyan: false
 });

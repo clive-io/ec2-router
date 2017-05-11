@@ -2,6 +2,8 @@
 
 let argv = require('yargs').argv, cmd = argv._[0];
 let request = require('request-promise');
+
+process.env.PM2_HOME = '/home/www/.pm2';
 let pm2 = require('pm2');
 
 switch(cmd){
