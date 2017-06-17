@@ -29,7 +29,7 @@ require('mkdirp')(require('path').dirname(SAVEFILE), function(err){
 });
 
 var sslDefault = {
-  port: 443,
+  port: 9443,
   key: ROUTERDIR + "/certs/default.key",
   cert: ROUTERDIR + "/certs/default.crt",
   ca: [ROUTERDIR + "/certs/default.ca"]
@@ -39,7 +39,7 @@ if(!checkSSL(sslDefault)){
   process.exit(1);
 }
 var proxy = require('redbird')({
-  port: 9999,
+  port: 9080,
   ssl: sslDefault,
   bunyan: false
 });
